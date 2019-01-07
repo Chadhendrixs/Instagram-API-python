@@ -161,10 +161,14 @@ class InstagramAPI:
                                'Connection': 'close',
                                'User-Agent': self.USER_AGENT})
         response = self.s.post(self.API_URL + "upload/photo/", data=m.to_string())
-        if response.status_code == 200:
+        if response != 200:
             if self.configure(upload_id, photo, caption):
                 self.expose()
-        return False
+                return True
+            else:
+                return False
+        else:
+            return True
 
     def uploadVideo(self, video, thumbnail, caption=None, upload_id=None, is_sidecar=None):
         if upload_id is None:
